@@ -39,12 +39,12 @@ newest_events = response.first['newest_events']
 
 RemoLog.create(
   measured_at: Time.now,
-  humidity: newest_events['hu']['val'],
-  humidity_created_at: newest_events['hu']['created_at'],
-  illumination: newest_events['il']['val'],
-  illumination_created_at: newest_events['il']['created_at'],
-  motion: newest_events['mo']['val'],
-  motion_created_at: newest_events['mo']['created_at'],
-  temperature: newest_events['te']['val'],
-  temperature_created_at: newest_events['te']['created_at']
+  humidity: newest_events.dig('hu', 'val'),
+  humidity_created_at: newest_events.dig('hu', 'created_at'),
+  illumination: newest_events.dig('il', 'val'),
+  illumination_created_at: newest_events.dig('il', 'created_at'),
+  motion: newest_events.dig('mo', 'val'),
+  motion_created_at: newest_events.dig('mo', 'created_at'),
+  temperature: newest_events.dig('te', 'val'),
+  temperature_created_at: newest_events.dig('te', 'created_at')
 )
