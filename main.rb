@@ -4,6 +4,7 @@ require 'openssl'
 require 'json'
 require 'active_record'
 require 'dotenv/load'
+require './slack_client'
 
 ActiveRecord::Base.establish_connection(
   adapter: 'mysql2',
@@ -34,17 +35,25 @@ def fetch
   JSON.parse(response.body)
 end
 
-response = fetch
-newest_events = response.first['newest_events']
-
-RemoLog.create(
-  measured_at: Time.now,
-  humidity: newest_events.dig('hu', 'val'),
-  humidity_created_at: newest_events.dig('hu', 'created_at'),
-  illumination: newest_events.dig('il', 'val'),
-  illumination_created_at: newest_events.dig('il', 'created_at'),
-  motion: newest_events.dig('mo', 'val'),
-  motion_created_at: newest_events.dig('mo', 'created_at'),
-  temperature: newest_events.dig('te', 'val'),
-  temperature_created_at: newest_events.dig('te', 'created_at')
-)
+begin
+  response = fetch
+  newest_events = response.first['newest_events']
+  RemoLog.create(
+    measured_at: Time.now,
+    humidity: newest_events.dig('hu', 'val'),
+    humidity_created_at: newest_events.dig('hu', 'created_at'),
+    illumination: newest_events.dig('il', 'val'),
+    illumination_created_at: newest_events.dig('il', 'created_at'),
+    motion: newest_events.dig('mo', 'val'),
+    motion_created_at: newest_events.dig('mo', 'created_at'),
+    temperature: newest_events.dig('te', 'val'),
+    temperature_created_at: newest_events.dig('te', 'created_at')
+  )
+rescue => e
+  SlackClient.new.post <<~"EOS"
+    ```
+    #{e.message}
+    #{e.backtrace.join("\n")}
+    ```
+  EOS
+end

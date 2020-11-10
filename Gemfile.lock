@@ -18,6 +18,7 @@ GEM
       concurrent-ruby (~> 1.0)
     minitest (5.14.1)
     mysql2 (0.5.3)
+    slack-incoming-webhooks (0.3.0)
     thread_safe (0.3.6)
     tzinfo (1.2.7)
       thread_safe (~> 0.1)
@@ -31,6 +32,7 @@ DEPENDENCIES
   activesupport
   dotenv
   mysql2
+  slack-incoming-webhooks
 
 BUNDLED WITH
    2.1.4
