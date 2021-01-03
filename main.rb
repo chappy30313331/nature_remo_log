@@ -22,15 +22,10 @@ end
 begin
   remo = fetch_remo.first['newest_events']
   RemoLog.create(
-    measured_at: Time.now,
     humidity: remo.dig('hu', 'val'),
-    humidity_created_at: remo.dig('hu', 'created_at'),
     illumination: remo.dig('il', 'val'),
-    illumination_created_at: remo.dig('il', 'created_at'),
     motion: remo.dig('mo', 'val'),
-    motion_created_at: remo.dig('mo', 'created_at'),
     temperature: remo.dig('te', 'val'),
-    temperature_created_at: remo.dig('te', 'created_at'),
   )
 rescue => e
   SlackClient.new.post <<~"EOS"
