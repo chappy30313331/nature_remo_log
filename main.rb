@@ -23,13 +23,7 @@ def fetch_remo
   JSON.parse(response)
 end
 
-def fetch_co2
-  response = HTTP.get(URI::HTTP.build(host: ENV['CO2_HOST']))
-  JSON.parse(response)
-end
-
 begin
-  co2 = fetch_co2
   remo = fetch_remo.first['newest_events']
   RemoLog.create(
     measured_at: Time.now,
@@ -41,7 +35,6 @@ begin
     motion_created_at: remo.dig('mo', 'created_at'),
     temperature: remo.dig('te', 'val'),
     temperature_created_at: remo.dig('te', 'created_at'),
-    co2: co2['value']
   )
 rescue => e
   SlackClient.new.post <<~"EOS"
