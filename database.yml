@@ -1,11 +1,10 @@
-development:
+default: &default
   adapter: postgresql
   encoding: unicode
-  url: postgres://localhost:5432/nature_remo_log_development
+  url: <%= ENV['DATABASE_URL'] %>
+
+development:
+  <<: *default
 
 production:
-  adapter: mysql2
-  database: <%= ENV['DB_DATABASE'] %>
-  host: <%= ENV['DB_HOST'] %>
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
+  <<: *default
