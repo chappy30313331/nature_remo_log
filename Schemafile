@@ -1,0 +1,8 @@
+create_table "remo_logs", force: :cascade do |t|
+  t.decimal "humidity", precision: 10, scale: 1
+  t.decimal "illumination", precision: 10, scale: 2
+  t.boolean "motion"
+  t.decimal "temperature", precision: 10, scale: 1
+  t.datetime "created_at"
+  t.datetime "updated_at"
+end

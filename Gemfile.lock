@@ -15,6 +15,7 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     concurrent-ruby (1.1.6)
+    diffy (3.4.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     dotenv (2.7.5)
@@ -36,8 +37,12 @@ GEM
       concurrent-ruby (~> 1.0)
     minitest (5.14.1)
     mysql2 (0.5.3)
+    pg (1.2.3)
     public_suffix (4.0.6)
     rake (13.0.1)
+    ridgepole (0.8.12)
+      activerecord (>= 5.0.1, < 6.1)
+      diffy
     slack-incoming-webhooks (0.3.0)
     thread_safe (0.3.6)
     tzinfo (1.2.7)
@@ -56,6 +61,8 @@ DEPENDENCIES
   dotenv
   http
   mysql2
+  pg
+  ridgepole
   slack-incoming-webhooks
 
 BUNDLED WITH
